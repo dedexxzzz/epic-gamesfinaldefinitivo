@@ -1,6 +1,7 @@
 package com.example.epicgmes;
 
 import android.Manifest; // nomes das permissões do Android
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Looper;
@@ -10,6 +11,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.activity.EdgeToEdge;
 import androidx.activity.result.ActivityResultLauncher;
@@ -51,6 +53,38 @@ public class MainActivity4 extends AppCompatActivity {
             return insets;
         });
 
+        // Logo da Epic Games -> MainActivity
+        ImageView logo = findViewById(R.id.imageView16);
+        if (logo != null) {
+            logo.setOnClickListener(v -> {
+                startActivity(new Intent(MainActivity4.this, MainActivity.class));
+            });
+        }
+
+        // Descobrir -> MainActivity
+        TextView descobrir = findViewById(R.id.textViewDescobrir4);
+        if (descobrir != null) {
+            descobrir.setOnClickListener(v -> {
+                startActivity(new Intent(MainActivity4.this, MainActivity.class));
+            });
+        }
+
+        // Navegar -> MainActivity2
+        TextView navegar = findViewById(R.id.textViewNavegar4);
+        if (navegar != null) {
+            navegar.setOnClickListener(v -> {
+                startActivity(new Intent(MainActivity4.this, MainActivity2.class));
+            });
+        }
+
+        // Novidades -> MainActivity3
+        TextView novidades = findViewById(R.id.textViewNovidades4);
+        if (novidades != null) {
+            novidades.setOnClickListener(v -> {
+                startActivity(new Intent(MainActivity4.this, MainActivity3.class));
+            });
+        }
+
         textGps = findViewById(R.id.textGps);
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
@@ -70,7 +104,7 @@ public class MainActivity4 extends AppCompatActivity {
                 return true;
             }
         });
-        webViewMapa.loadUrl("file:///android_asset/mapa.html");
+        webViewMapa.loadUrl("file:///android_asset/maopa.html");
 
         // Ouvinte que recebe a localização e atualiza o texto + o mapa
         locationCallback = new LocationCallback() {

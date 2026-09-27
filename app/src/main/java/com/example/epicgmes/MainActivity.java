@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,23 +23,58 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Primeiro coloca a tela na tela
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
-        // Encontra o botão
-        Button proxima = findViewById(R.id.proximo);
+        // Logo da Epic Games -> MainActivity
+        ImageView logo = findViewById(R.id.imageView);
+        if (logo != null) {
+            logo.setOnClickListener(v -> {
+                // Já está na MainActivity
+            });
+        }
+        ImageView logo13 = findViewById(R.id.imageView13);
+        if (logo13 != null) {
+            logo13.setOnClickListener(v -> {
+                // Já está na MainActivity
+            });
+        }
 
-        // Quando clicar no botão, abre a MainActivity2
-        proxima.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        // Botão Novidades -> MainActivity3
+        Button proxima2 = findViewById(R.id.proximo2);
+        if (proxima2 != null) {
+            proxima2.setOnClickListener(v -> {
+                Intent intent = new Intent(MainActivity.this, MainActivity3.class);
+                startActivity(intent);
+            });
+        }
 
+        // Botão Navegar -> MainActivity2
+        Button proxima3 = findViewById(R.id.proximo3);
+        if (proxima3 != null) {
+            proxima3.setOnClickListener(v -> {
                 Intent intent = new Intent(MainActivity.this, MainActivity2.class);
                 startActivity(intent);
+            });
+        }
 
-            }
-        });
+        // Botão Evento de Games -> MainActivity4
+        Button evento = findViewById(R.id.button2);
+        if (evento != null) {
+            evento.setOnClickListener(v -> {
+                Intent intent = new Intent(MainActivity.this, MainActivity4.class);
+                startActivity(intent);
+            });
+        }
+
+        // Botão Jogar agora -> MainActivity5
+        Button jogarAgora = findViewById(R.id.button);
+        if (jogarAgora != null) {
+            jogarAgora.setOnClickListener(v -> {
+                Intent intent = new Intent(MainActivity.this, MainActivity5.class);
+                startActivity(intent);
+            });
+        }
 
         // ViewPager dos jogos
         ViewPager2 viewPager = findViewById(R.id.viewPagerJogos);
@@ -47,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
                 R.drawable.battlefield,
                 R.drawable.resident,
                 R.drawable.phantom1,
-                R.drawable.first
+                R.drawable.fornite
         };
 
         String[] precos = {

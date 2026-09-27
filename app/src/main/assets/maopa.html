@@ -3,48 +3,51 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
-        html, body, #map { height: 100%; margin: 0; padding: 0; }
+        html, body, #map { height: 100%; margin: 0; padding: 0; background: #121111; }
     </style>
 </head>
 <body>
 <div id="map"></div>
-<script>
-    var map;
-    var marcadorDestino;
-    var marcadorUsuario;
-    // Ponto fixo: troque pelas coordenadas do seu destino
-    var destino = { lat: -23.5505, lng: -46.6333 }; // Praça da Sé - SP
-    // Roda ao carregar: centraliza no destino fixo e o marca
-    function initMap() {
-    map = new google.maps.Map(document.getElementById("map"), {
-    zoom: 15,
-    center: destino,
-    });
-    marcadorDestino = new google.maps.Marker({
-    position: destino,
-    map: map,
-    title: "Destino"
-    });
-    }
-    // Adiciona um segundo marcador para a localização do usuário
 
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+    // Coordenadas da Times Square (Nova York, EUA)
+    var latDestino = 40.7580;
+    var lngDestino = -73.9855;
+
+    var map = L.map('map').setView([latDestino, lngDestino], 15);
+
+    // Camada de mapa OpenStreetMap
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    // Marcador do Destino (Times Square)
+    var marcadorDestino = L.marker([latDestino, lngDestino]).addTo(map)
+        .bindPopup('<b>Times Square - Evento</b>')
+        .openPopup();
+
+    var marcadorUsuario = null;
+
+    // Função chamada pelo Android para atualizar a localização do usuário
     function updateLocation(lat, lng) {
-    var origem = { lat: lat, lng: lng };
-    if (marcadorUsuario) {
-    marcadorUsuario.setMap(null);
-    }
-    marcadorUsuario = new google.maps.Marker({
-    position: origem,
-    map: map,
-    title: "Você está aqui",
-    // ícone azul, diferente do marcador do destino (vermelho)
-    icon: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"
-    });
+        try {
+            var origem = [lat, lng];
+            if (marcadorUsuario) {
+                map.removeLayer(marcadorUsuario);
+            }
+            marcadorUsuario = L.marker(origem).addTo(map)
+                .bindPopup('<b>Você está aqui</b>');
+            map.setView(origem, 16);
+        } catch (e) {
+            console.error("Erro ao atualizar localização: " + e.message);
+        }
     }
 </script>
-<script
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDrKAGJbi282FUeZccTZowkeQMQJ7FzP3M&callback=initMap"
-        async defer></script>
 </body>
 </html>
